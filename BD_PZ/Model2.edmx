@@ -1,0 +1,550 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище OOO_CitadelModel1" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employer">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pas_info" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="emp_post" Type="varchar" MaxLength="51" Nullable="false" />
+        </EntityType>
+        <EntityType Name="maker">
+          <Key>
+            <PropertyRef Name="maker_name" />
+          </Key>
+          <Property Name="maker_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="country" Type="varchar" MaxLength="52" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pasport">
+          <Key>
+            <PropertyRef Name="Pas_info" />
+          </Key>
+          <Property Name="Pas_info" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Full_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date_Of_Birth" Type="date" Nullable="false" />
+          <Property Name="regis" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="post_name" />
+          </Key>
+          <Property Name="post_name" Type="varchar" MaxLength="51" Nullable="false" />
+          <Property Name="salary" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prod_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="prod_price" Type="money" Nullable="false" />
+          <Property Name="prod_productionDate" Type="date" />
+          <Property Name="marker" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ima" Type="varbinary(max)" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "OOO_Citadel.dbo.Shop" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="Emp_id" />
+            <PropertyRef Name="adress" />
+            <PropertyRef Name="stor_id" />
+          </Key>
+          <Property Name="Emp_id" Type="int" Nullable="false" />
+          <Property Name="adress" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="stor_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="stor_id" />
+          </Key>
+          <Property Name="stor_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prod_id" Type="int" Nullable="false" />
+          <Property Name="Emp_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="us_log" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="us_pas" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Employer__emp_po__412EB0B6">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Employer" Type="Self.Employer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="post_name" />
+            </Principal>
+            <Dependent Role="Employer">
+              <PropertyRef Name="emp_post" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employer__pas_in__403A8C7D">
+          <End Role="pasport" Type="Self.pasport" Multiplicity="1" />
+          <End Role="Employer" Type="Self.Employer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pasport">
+              <PropertyRef Name="Pas_info" />
+            </Principal>
+            <Dependent Role="Employer">
+              <PropertyRef Name="pas_info" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product__marker__398D8EEE">
+          <End Role="maker" Type="Self.maker" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="maker">
+              <PropertyRef Name="maker_name" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="marker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shop__Emp_id__46E78A0C">
+          <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+          <End Role="Shop" Type="Self.Shop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="Shop">
+              <PropertyRef Name="Emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shop__stor_id__47DBAE45">
+          <End Role="Storage" Type="Self.Storage" Multiplicity="1" />
+          <End Role="Shop" Type="Self.Shop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storage">
+              <PropertyRef Name="stor_id" />
+            </Principal>
+            <Dependent Role="Shop">
+              <PropertyRef Name="stor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Storage__Emp_id__44FF419A">
+          <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="Emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Storage__prod_id__440B1D61">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище OOO_CitadelModel1Container">
+          <EntitySet Name="Employer" EntityType="Self.Employer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="maker" EntityType="Self.maker" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pasport" EntityType="Self.pasport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Storage" EntityType="Self.Storage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shop" EntityType="Self.Shop" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Shop].[Emp_id] AS [Emp_id], 
+    [Shop].[adress] AS [adress], 
+    [Shop].[stor_id] AS [stor_id]
+    FROM [dbo].[Shop] AS [Shop]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Employer__emp_po__412EB0B6" Association="Self.FK__Employer__emp_po__412EB0B6">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Employer" EntitySet="Employer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employer__pas_in__403A8C7D" Association="Self.FK__Employer__pas_in__403A8C7D">
+            <End Role="pasport" EntitySet="pasport" />
+            <End Role="Employer" EntitySet="Employer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product__marker__398D8EEE" Association="Self.FK__product__marker__398D8EEE">
+            <End Role="maker" EntitySet="maker" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shop__Emp_id__46E78A0C" Association="Self.FK__Shop__Emp_id__46E78A0C">
+            <End Role="Employer" EntitySet="Employer" />
+            <End Role="Shop" EntitySet="Shop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shop__stor_id__47DBAE45" Association="Self.FK__Shop__stor_id__47DBAE45">
+            <End Role="Storage" EntitySet="Storage" />
+            <End Role="Shop" EntitySet="Shop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Storage__Emp_id__44FF419A" Association="Self.FK__Storage__Emp_id__44FF419A">
+            <End Role="Employer" EntitySet="Employer" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Storage__prod_id__440B1D61" Association="Self.FK__Storage__prod_id__440B1D61">
+            <End Role="product" EntitySet="product" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OOO_CitadelModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employer">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pas_info" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="emp_post" Type="String" MaxLength="51" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="Self.FK__Employer__emp_po__412EB0B6" FromRole="Employer" ToRole="Post" />
+          <NavigationProperty Name="pasport" Relationship="Self.FK__Employer__pas_in__403A8C7D" FromRole="Employer" ToRole="pasport" />
+          <NavigationProperty Name="Shop" Relationship="Self.FK__Shop__Emp_id__46E78A0C" FromRole="Employer" ToRole="Shop" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK__Storage__Emp_id__44FF419A" FromRole="Employer" ToRole="Storage" />
+        </EntityType>
+        <EntityType Name="maker">
+          <Key>
+            <PropertyRef Name="maker_name" />
+          </Key>
+          <Property Name="maker_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="country" Type="String" MaxLength="52" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="Self.FK__product__marker__398D8EEE" FromRole="maker" ToRole="product" />
+        </EntityType>
+        <EntityType Name="pasport">
+          <Key>
+            <PropertyRef Name="Pas_info" />
+          </Key>
+          <Property Name="Pas_info" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Full_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date_Of_Birth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="regis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employer" Relationship="Self.FK__Employer__pas_in__403A8C7D" FromRole="pasport" ToRole="Employer" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="post_name" />
+          </Key>
+          <Property Name="post_name" Type="String" MaxLength="51" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="salary" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employer" Relationship="Self.FK__Employer__emp_po__412EB0B6" FromRole="Post" ToRole="Employer" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prod_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prod_price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="prod_productionDate" Type="DateTime" Precision="0" />
+          <Property Name="marker" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="maker" Relationship="Self.FK__product__marker__398D8EEE" FromRole="product" ToRole="maker" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK__Storage__prod_id__440B1D61" FromRole="product" ToRole="Storage" />
+          <Property Name="ima" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="stor_id" />
+          </Key>
+          <Property Name="stor_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prod_id" Type="Int32" Nullable="false" />
+          <Property Name="Emp_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employer" Relationship="Self.FK__Storage__Emp_id__44FF419A" FromRole="Storage" ToRole="Employer" />
+          <NavigationProperty Name="product" Relationship="Self.FK__Storage__prod_id__440B1D61" FromRole="Storage" ToRole="product" />
+          <NavigationProperty Name="Shop" Relationship="Self.FK__Shop__stor_id__47DBAE45" FromRole="Storage" ToRole="Shop" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="Emp_id" />
+            <PropertyRef Name="adress" />
+            <PropertyRef Name="stor_id" />
+          </Key>
+          <Property Name="Emp_id" Type="Int32" Nullable="false" />
+          <Property Name="adress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="stor_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employer" Relationship="Self.FK__Shop__Emp_id__46E78A0C" FromRole="Shop" ToRole="Employer" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK__Shop__stor_id__47DBAE45" FromRole="Shop" ToRole="Storage" />
+        </EntityType>
+        <Association Name="FK__Employer__emp_po__412EB0B6">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Employer" Type="Self.Employer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="post_name" />
+            </Principal>
+            <Dependent Role="Employer">
+              <PropertyRef Name="emp_post" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employer__pas_in__403A8C7D">
+          <End Role="pasport" Type="Self.pasport" Multiplicity="1" />
+          <End Role="Employer" Type="Self.Employer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pasport">
+              <PropertyRef Name="Pas_info" />
+            </Principal>
+            <Dependent Role="Employer">
+              <PropertyRef Name="pas_info" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shop__Emp_id__46E78A0C">
+          <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+          <End Role="Shop" Type="Self.Shop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="Shop">
+              <PropertyRef Name="Emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Storage__Emp_id__44FF419A">
+          <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="emp_id" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="Emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product__marker__398D8EEE">
+          <End Role="maker" Type="Self.maker" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="maker">
+              <PropertyRef Name="maker_name" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="marker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Storage__prod_id__440B1D61">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="prod_id" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="prod_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shop__stor_id__47DBAE45">
+          <End Role="Storage" Type="Self.Storage" Multiplicity="1" />
+          <End Role="Shop" Type="Self.Shop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storage">
+              <PropertyRef Name="stor_id" />
+            </Principal>
+            <Dependent Role="Shop">
+              <PropertyRef Name="stor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OOO_CitadelEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employer" EntityType="Self.Employer" />
+          <EntitySet Name="maker" EntityType="Self.maker" />
+          <EntitySet Name="pasport" EntityType="Self.pasport" />
+          <EntitySet Name="Post" EntityType="Self.Post" />
+          <EntitySet Name="product" EntityType="Self.product" />
+          <EntitySet Name="Storage" EntityType="Self.Storage" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Shop" EntityType="Self.Shop" />
+          <AssociationSet Name="FK__Employer__emp_po__412EB0B6" Association="Self.FK__Employer__emp_po__412EB0B6">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Employer" EntitySet="Employer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employer__pas_in__403A8C7D" Association="Self.FK__Employer__pas_in__403A8C7D">
+            <End Role="pasport" EntitySet="pasport" />
+            <End Role="Employer" EntitySet="Employer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shop__Emp_id__46E78A0C" Association="Self.FK__Shop__Emp_id__46E78A0C">
+            <End Role="Employer" EntitySet="Employer" />
+            <End Role="Shop" EntitySet="Shop" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Storage__Emp_id__44FF419A" Association="Self.FK__Storage__Emp_id__44FF419A">
+            <End Role="Employer" EntitySet="Employer" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product__marker__398D8EEE" Association="Self.FK__product__marker__398D8EEE">
+            <End Role="maker" EntitySet="maker" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Storage__prod_id__440B1D61" Association="Self.FK__Storage__prod_id__440B1D61">
+            <End Role="product" EntitySet="product" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shop__stor_id__47DBAE45" Association="Self.FK__Shop__stor_id__47DBAE45">
+            <End Role="Storage" EntitySet="Storage" />
+            <End Role="Shop" EntitySet="Shop" />
+          </AssociationSet>
+          <EntitySet Name="users" EntityType="OOO_CitadelModel1.users" />
+        </EntityContainer>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="us_log" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="us_pas" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище OOO_CitadelModel1Container" CdmEntityContainer="OOO_CitadelEntities1">
+          <EntitySetMapping Name="Employer">
+            <EntityTypeMapping TypeName="OOO_CitadelModel1.Employer">
+              <MappingFragment StoreEntitySet="Employer">
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="pas_info" ColumnName="pas_info" />
+                <ScalarProperty Name="emp_post" ColumnName="emp_post" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="maker">
+            <EntityTypeMapping TypeName="OOO_CitadelModel1.maker">
+              <MappingFragment StoreEntitySet="maker">
+                <ScalarProperty Name="maker_name" ColumnName="maker_name" />
+                <ScalarProperty Name="country" ColumnName="country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pasport">
+            <EntityTypeMapping TypeName="OOO_CitadelModel1.pasport">
+              <MappingFragment StoreEntitySet="pasport">
+                <ScalarProperty Name="Pas_info" ColumnName="Pas_info" />
+                <ScalarProperty Name="Full_name" ColumnName="Full_name" />
+                <ScalarProperty Name="Date_Of_Birth" ColumnName="Date_Of_Birth" />
+                <ScalarProperty Name="regis" ColumnName="regis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="OOO_CitadelModel1.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="post_name" ColumnName="post_name" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product">
+            <EntityTypeMapping TypeName="OOO_CitadelModel1.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="ima" ColumnName="ima" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="prod_name" ColumnName="prod_name" />
+                <ScalarProperty Name="prod_price" ColumnName="prod_price" />
+                <ScalarProperty Name="prod_productionDate" ColumnName="prod_productionDate" />
+                <ScalarProperty Name="marker" ColumnName="marker" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Storage">
+            <EntityTypeMapping TypeName="OOO_CitadelModel1.Storage">
+              <MappingFragment StoreEntitySet="Storage">
+                <ScalarProperty Name="stor_id" ColumnName="stor_id" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+                <ScalarProperty Name="Emp_id" ColumnName="Emp_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="OOO_CitadelModel1.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shop">
+            <EntityTypeMapping TypeName="OOO_CitadelModel1.Shop">
+              <MappingFragment StoreEntitySet="Shop">
+                <ScalarProperty Name="Emp_id" ColumnName="Emp_id" />
+                <ScalarProperty Name="adress" ColumnName="adress" />
+                <ScalarProperty Name="stor_id" ColumnName="stor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="OOO_CitadelModel1.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="us_pas" ColumnName="us_pas" />
+                <ScalarProperty Name="us_log" ColumnName="us_log" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

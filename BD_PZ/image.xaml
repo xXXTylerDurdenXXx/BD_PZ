@@ -1,0 +1,15 @@
+﻿<Window x:Class="BD_PZ.image"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BD_PZ"
+        mc:Ignorable="d"
+        Title="image" Height="350" Width="600">
+    <Grid>
+        <Image x:Name="ima" Width="200" Height="200"/>
+        <Button Content="Выбрать изображение" Margin="0 0 0 10" VerticalAlignment="Bottom" Width="190" Click="Button_Click" />
+        <Button Content="Загрузить изображение" VerticalAlignment="Bottom" Margin="0 0 0 50" Width="190" Click="Button_Click_1" />
+        <Button Content="Назад" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 0 10" Click="Button_Click_2" />
+    </Grid>
+</Window>

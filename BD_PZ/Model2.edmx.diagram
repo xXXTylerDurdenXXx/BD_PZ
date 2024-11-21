@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dea7de2c40674c1cb05b6a1670053317" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="OOO_CitadelModel1.Employer" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOO_CitadelModel1.maker" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOO_CitadelModel1.pasport" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOO_CitadelModel1.Post" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOO_CitadelModel1.product" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOO_CitadelModel1.Storage" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOO_CitadelModel1.sysdiagrams" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OOO_CitadelModel1.Shop" Width="1.5" PointX="7.5" PointY="3.5" IsExpanded="true" />
+        <AssociationConnector Association="OOO_CitadelModel1.FK__Employer__emp_po__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="OOO_CitadelModel1.FK__Employer__pas_in__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="OOO_CitadelModel1.FK__Shop__Emp_id__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="OOO_CitadelModel1.FK__Storage__Emp_id__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="OOO_CitadelModel1.FK__product__marker__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="OOO_CitadelModel1.FK__Storage__prod_id__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="OOO_CitadelModel1.FK__Shop__stor_id__47DBAE45" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OOO_CitadelModel1.users" Width="1.5" PointX="3.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
