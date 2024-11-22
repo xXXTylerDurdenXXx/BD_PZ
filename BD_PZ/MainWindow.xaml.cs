@@ -272,14 +272,50 @@ namespace BD_PZ
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            string pIn = tbId.Text;
-            var selectIn = db.pasport.Where(w => w.Pas_info == pIn).FirstOrDefault();
-            selectIn.Pas_info = tbId.Text;
-            selectIn.Full_name = tbN.Text;
-            selectIn.Date_Of_Birth = Convert.ToDateTime(tbD);
-            selectIn.regis = tbR.Text;
-            db.SaveChanges();
-            dgPass.ItemsSource = db.pasport.ToList();
+            if (funcString == "maker")
+            {
+                maker maker = new maker();
+                maker.maker_name = tbId.Text;
+                maker.country = tbN.Text;
+                db.SaveChanges();
+                dgPass.ItemsSource = db.maker.ToList();
+            }
+            else if (funcString == "product")
+            {
+                product product = new product();
+                product.prod_name = tbId.Text;
+                product.prod_price = Convert.ToInt32(tbN.Text);
+                product.prod_productionDate = Convert.ToDateTime(tbD.Text);
+                product.marker = tbR.Text;
+                db.SaveChanges();
+                dgPass.ItemsSource = db.product.ToList();
+            }
+            else if (funcString == "pasport")
+            {
+                pasport pas = new pasport();
+                pas.Pas_info = tbId.Text;
+                pas.Full_name = tbN.Text;
+                pas.Date_Of_Birth = Convert.ToDateTime(tbD.Text);
+                pas.regis = tbR.Text;
+                db.SaveChanges();
+                dgPass.ItemsSource = db.pasport.ToList();
+            }
+            else if (funcString == "Post")
+            {
+                Post post = new Post();
+                post.post_name = tbId.Text;
+                post.salary = Convert.ToInt32(tbN.Text);
+                db.Post.Add(post);
+                dgPass.ItemsSource = db.Post.ToList();
+            }
+            else if (funcString == "Employer")
+            {
+                Employer employer = new Employer();
+                employer.pas_info = tbId.Text;
+                employer.emp_post = tbN.Text;
+                db.Employer.Add(employer);
+                dgPass.ItemsSource = db.Employer.ToList();
+            }
         }
 
 
